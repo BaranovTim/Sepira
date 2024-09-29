@@ -1,0 +1,54 @@
+{% extends 'main/stock_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - Stock {% endblock %}
+
+{% block header_title %} Stock {% endblock %}
+
+{% block content %}
+
+<div class="find_item">
+    <form method="GET" action="">
+        <input type="text" name="item" placeholder="Search items..." value="{{ request.GET.item }}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+
+<div class="items">
+    {% for item in items %}
+        <div class="item">
+
+            <details>
+                <summary>
+                    <span class="item_name"> {{item.item.name}} </span>
+                    <span class="item_quantity"> {{item.quantity}} </span>
+                </summary>
+                <div class="item_details">
+
+                    <div class="item_qrcode">
+                        <h2 class="qrcode_name">Qrcode</h2>
+                        <img src="{{ item.item.qr_code.url }}">
+                        <a href="{{ item.item.qr_code.url }}" download="{{ item.item.name }}_qrcode.png">
+                            <button type="button">Download</button>
+                        </a>
+                    </div>
+
+
+                    <div class="item_info">
+                        <h2 class="info_name">Info</h2>
+                        <img src=r"{{item.item.location}}">
+                        <h5>Location: {{item.item.location_name}}</h5>
+                        <h5>Quantity : {{item.quantity}}</h5>
+                    </div>
+                </div>
+            </details>
+        </div>
+    {% endfor %}
+</div>
+
+
+    <footer class="footer">
+        Powered by Sepira
+    </footer>
+{% endblock %}

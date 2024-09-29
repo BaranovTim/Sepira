@@ -1,0 +1,53 @@
+{% extends 'main/news_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - News {% endblock %}
+
+{% block header_title %} News {% endblock %}
+
+{% block content %}
+
+{% if user.is_staff %}
+<div class="add_news">
+    <a href="{% url 'add_news' %}"><i class="fas fa-plus"></i></a>
+</div>
+{% endif %}
+
+{% if news %}
+    <div class="news_true">
+
+        <div class="news">
+        {% for el in news %}
+            <div class="new">
+                <div class="text-content">
+                    <p class="user">{{ el.user }}</p>
+                    <h3 class="title">{{ el.title }}</h3>
+                    <h6 class="content">{{ el.content }}</h6>
+                    <h6 class="date">{{ el.date|date:"d M" }}</h6>
+                </div>
+                {% if el.image %}
+                    <img src="{{ el.image.url }}" class="img">
+                {% endif %}
+            </div>
+            <br>
+        {% endfor %}
+        </div>
+
+
+        <footer class="footer">
+            Powered by Sepira
+        </footer>
+    </div>
+
+    {% else %}
+    <div class="news_false">
+        <div class="no_news">
+           No news yet
+        </div>
+
+        <footer class="footer">
+            Powered by Sepira
+        </footer>
+{% endif %}
+
+{% endblock %}

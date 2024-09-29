@@ -1,0 +1,21 @@
+{% extends 'main/add_user_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - Add User {% endblock %}
+
+{% block header_title %} Add User {% endblock %}
+
+{% block content %}
+
+<form method="post" class="add_user_form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add User</button>
+</form>
+
+
+<footer class="footer">
+        Powered by Sepira
+    </footer>
+
+{% endblock %}

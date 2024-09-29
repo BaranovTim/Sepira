@@ -1,0 +1,99 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} Sepira {% endblock %}
+
+{% block header_title %} Manage goods {% endblock %}
+
+{% block content %}
+
+
+
+<div class="main">
+    <div class="recent_updates">
+
+            <div class="updates_angle">
+                    <a href="{% url 'news' %}" class="recent_updates_text">
+                        Recent updates
+                    <i class="fas fa-angle-right"></i>
+                    <br>
+                        <br>
+                        <img src="{% static 'main/img/warehouse_stock.png' %}" class="warehouse_png" alt="">
+                    </a>
+            </div>
+
+    </div>
+
+
+
+
+    <div class="actions">
+        <p class="actions_text">Actions
+        </p>
+            <br>
+                <a href="{% url 'add' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Add</a>
+                <a href="{% url 'take' %}" class="btn btn-primary">
+                    <i class="fas fa-cubes-stacked "></i>
+                    Take</a>
+            <br>
+                <a href="{% url 'return_back' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-rotate-left"></i>
+                    Return</a>
+                <a href="{% url 'remove' %}" class="btn btn-primary">
+                    <i class="fas fa-trash "></i>
+                    Remove</a>
+    </div>
+
+
+
+    <div class="recommended">
+        <div class="recommended_angle">
+            {% if user.is_staff == True %}
+            <p class="recommended_text">
+                Warehouse tools
+            </p>
+                <div class="button-row">
+                    <a href="{% url 'add_item' %}" class="btn btn-primary ">
+                        <div class="btn-content">
+                            Add Item
+                            <i class="fas fa-box"></i>
+                        </div>
+                    </a>
+                    <a href="{% url 'stock' %}" class="btn btn-primary ">
+                        <div class="btn-content">
+                            Inventory
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </a>
+                </div>
+            {% else %}
+
+            <p class="recommended_text">
+                Recommended for you
+            </p>
+                <div class="button-row">
+                    <a href="{% url 'statistics' %}" class="btn btn-primary ">
+                        <div class="btn-content">
+                            Statistics
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </a>
+                    <a href="{% url 'info' %}" class="btn btn-primary ">
+                        <div class="btn-content">
+                            Info
+                            <i class="fas fa-info"></i>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+    <footer class="footer">
+        Powered by Sepira
+    </footer>
+
+
+{% endblock %}

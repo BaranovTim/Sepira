@@ -1,0 +1,30 @@
+{% extends 'qrcodes/add_item_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - Add Item {% endblock %}
+
+{% block header_title %} Add Item {% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <form method="POST" action="{% url 'add_item' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Item Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+        </div>
+        <button type="submit" class="add_item">Add Item</button>
+    </form>
+</div>
+
+
+<footer class="footer">
+        Powered by Sepira
+    </footer>
+
+{% endblock %}

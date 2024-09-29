@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: #1D1D1D;
+    color: #d5d5d5;
+
+}
+
+
+.ifauthusername {
+    color: #d5d5d5;
+    text-decoration: underline;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding-right: 15px;
+
+}
+
+
+header {
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.28);
+    border-radius: 1%;
+    background-color: #1d1d1d;
+    padding-top: 10%;
+    align-items: center;
+    padding-left: 6%;
+
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+.header .h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: x-large;
+    font-weight: 700;
+}
+.header-icons {
+    display: flex;
+
+}
+
+.header-icons i {
+    text-decoration: none;
+    line-height: 1;
+    color: #d5d5d5;
+    font-size: 28px;
+    margin-left: -110%;
+    margin-bottom: 40%;
+}
+.username_or_icon {
+    text-decoration: None;
+    color: #d5d5d5;
+    font-size: 18px;
+    padding-right: 20px;
+}
+
+
+
+.actions {
+    padding-top: 5%;
+
+}
+
+.actions a  {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    background: #474646;
+    border-color: #474646;
+    width:43%;
+    height: 90px;
+    margin: 1%;
+    margin-right: 0;
+    border-radius: 15%;
+    align-content: center;
+}
+.actions p {
+    margin-bottom: -3%;
+}
+.actions i {
+    font-size: 28px;
+    margin-right: 20px;
+}
+
+.prev {
+    color: #d5d5d5;
+}
+
+
+.main {
+    flex: 1;
+    padding-left: 6%;
+    padding-bottom: 50px;
+}
+.footer {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    background-color: #474646;
+    color: #d5d5d5;
+    text-align: center;
+    padding: 20px ;
+
+
+    height: 50px;
+    font-size: 14px;
+    margin: 10px 20px; /* Add margin to create space around footer */
+    border-radius: 20px; /* Add border radius for rounded corners */
+    position: fixed;
+    bottom: 0;
+    width: 90%;
+
+
+}

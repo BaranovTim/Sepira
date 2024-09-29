@@ -1,0 +1,73 @@
+{% extends 'main/info_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - Info {% endblock %}
+
+{% block header_title %} Info {% endblock %}
+
+{% block content %}
+<div class="main">
+    <div class="main_page">
+        <details>
+            <summary>Main Page</summary>
+            <details>
+                <summary>Profile</summary>
+                <img src="{% static 'main/img/.png' %}" class="user_nav">
+                <span class="user_text"></span>
+            </details>
+            <details>
+                <summary>Recent Updates</summary>
+                <img src="{% static 'main/img/.png' %}" class="updates_nav">
+                <span class="updates_text"></span>
+            </details>
+            <details>
+                <summary>Actions</summary>
+                <img src="{% static 'main/img/.png' %}" class="updates_nav">
+                <span class="updates_text"></span>
+            </details>
+            <details>
+                <summary>Recommended</summary>
+                <img src="{% static 'main/img/.png' %}" class="updates_nav">
+                <span class="updates_text"></span>
+            </details>
+        </details>
+    </div>
+    <div class="action_page">
+        <details>
+            <summary>Action Page</summary>
+            <img src="{% static 'main/img/.png' %}" class="updates_nav">
+            <span class="updates_text"></span>
+        </details>
+    </div>
+    <div class="preaction_page">
+        <details>
+            <summary>Preaction Page</summary>
+            <img src="{% static 'main/img/.png' %}" class="updates_nav">
+            <span class="updates_text"></span>
+        </details>
+    </div>
+    <div class="scanner_page">
+        <details>
+            <summary>Qr-Scanner Page</summary>
+            <img src="{% static 'main/img/.png' %}" class="updates_nav">
+            <span class="updates_text"></span>
+        </details>
+    </div>
+    <div class="map_page">
+        <details>
+            <summary>Map Page</summary>
+            <img src="{% static 'main/img/.png' %}" class="updates_nav">
+            <span class="updates_text"></span>
+        </details>
+    </div>
+</div>
+
+
+<footer class="footer">
+    Powered by Sepira
+</footer>
+
+
+
+
+{% endblock %}

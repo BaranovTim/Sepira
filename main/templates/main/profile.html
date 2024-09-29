@@ -1,0 +1,78 @@
+{% extends 'main/profile_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - profile {% endblock %}
+
+{% block header_title %} Profile {% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+
+    <div class="account_info"><h1 class="acc_details_text">Account details</h1>
+            <span class="yourusername">Username</span><h6>{{ user.username }}</h6>
+            <span class="yourpassword">Password</span><h6>****</h6>
+            <form method="post" action="{% url 'change_password' %}" class="change_password">
+                {% csrf_token %}
+                <h5>Change password? Click <button type="submit">here</button> to change it!</h5>
+            </form>
+    </div>
+
+    <div class="actions"><h1>Tools</h1>
+        <div class="actions_container">
+                    <a href="{% url 'statistics' %}" class="statistics_text">
+                        Statistic
+                    <i class="fas fa-angle-right"></i>
+
+
+                        <h5>You can see your previous actions here.</h5>
+                    </a>
+            </div>
+        {% if user.is_staff %}
+        <div class="staff_buttons">
+            <div class="button_add_item">
+                <a href="{% url 'add_item' %}" class="btn btn-primary ">
+                    Add item
+                    </a>
+            </div>
+            <div class="button_add_user">
+                <a href="{% url 'add_user' %}" class="btn btn-primary ">
+                    Add user
+                    </a>
+            </div>
+            <div class="button_inventory">
+                <a href="{% url 'stock' %}" class="btn btn-primary ">
+                    Inventory
+                    </a>
+            </div>
+        </div>
+
+        <div class="admin_text">
+                <h5>Go to <a href="/admin">admin</a> page</h5>
+        </div>
+    {% endif %}
+    </div>
+
+
+
+    <div class="logout_text">
+        <form method="post" action="{% url 'logout' %}" class="log_out">
+            {% csrf_token %}
+            <h5>Do you want to log out? Click <button type="submit">here</button> to log out!</h5>
+        </form>
+    </div>
+    {% else %}
+        <div class="login_text">
+        <form method="post" action="{% url 'login' %}" class="log_in">
+            {% csrf_token %}
+            <h5>You are not logged in! Click <button type="submit">here</button> to log in!</h5>
+        </form>
+    </div>
+    {% endif %}
+
+
+    <footer class="footer">
+        Powered by Sepira
+    </footer>
+
+{% endblock %}

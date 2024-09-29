@@ -1,0 +1,216 @@
+body {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: #1D1D1D;
+    color: #d5d5d5;
+
+}
+
+.header-content {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.28);
+    border-radius: 1%;
+    background-color: #1d1d1d;
+    padding-top: 10%;
+    padding-left: 6%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 6%;
+}
+
+.h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    color: #d5d5d5;
+}
+
+.header-icons i {
+    text-decoration: none;
+    line-height: 1;
+    color: #d5d5d5;
+    font-size: 28px;
+}
+
+.prev i {
+    color: #d5d5d5;
+}
+
+.username_or_icon {
+    text-decoration: None;
+    color: #d5d5d5;
+    font-size: 18px;
+}
+
+
+
+
+.footer {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    background-color: #474646;
+    color: #d5d5d5;
+    text-align: center;
+    padding: 20px ;
+
+
+    height: 50px;
+    font-size: 14px;
+    margin: 10px 20px; /* Add margin to create space around footer */
+    border-radius: 20px; /* Add border radius for rounded corners */
+    position: fixed;
+    bottom: 0;
+    width: 90%;
+    margin-top: 50px;
+
+}
+
+.account_info {
+    box-shadow: 0 2px 4px rgba(80, 79, 79, 0.28);
+    border-radius: 1%;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    flex: 1;
+    padding-left: 6%;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+.account_info button {
+    background-color: #1d1d1d;
+    color: #6a80f3;
+    border: None;
+    font-size: 12px;
+
+}
+
+.account_info h5 {
+    font-size: 12px;
+    color: #595858;
+    padding-top: 10px;
+}
+
+.actions {
+
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 6%;
+    padding-top: 20px;
+    box-shadow: 0 2px 4px rgba(80, 79, 79, 0.28);
+    border-radius: 1%;
+}
+
+.acc_details_text {
+    padding-bottom: 10px;
+}
+
+
+
+
+.statistics_text {
+    color: #d5d5d5;
+    text-decoration: none;
+
+}
+
+.actions_container .fa-angle-right {
+    padding-left: 60% ;
+    color: #d5d5d5;
+}
+
+.actions_container {
+    display: flex;
+    flex-direction: row;
+
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+.actions_container h5 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #8f8f8f;
+    padding-top: 20px;
+}
+
+
+.logout_text {
+    padding-top: 30px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 6%;
+}
+
+.logout_text h5 {
+    font-size: 12px;
+    color: #595858;
+    padding-top: 10px;
+}
+
+.logout_text button {
+    background-color: #1d1d1d;
+    color: #6a80f3;
+    border: None;
+    font-size: 12px;
+}
+
+
+.login_text {
+    padding-top: 30px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 6%;
+}
+
+.login_text h5 {
+    font-size: 12px;
+    color: #595858;
+    padding-top: 10px;
+}
+
+.login_text button {
+    background-color: #1d1d1d;
+    color: #6a80f3;
+    border: None;
+    font-size: 12px;
+}
+
+.staff_buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-right: 6%;
+    padding-bottom: 20px;
+}
+
+.staff_buttons a {
+    background: #595858;
+    color: #d5d5d5;
+    border-radius: 10px;
+    border: None;
+}
+
+.admin_text {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    color: #8f8f8f;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.admin_text a {
+    text-decoration: None;
+    color: #6a80f3;
+    font-size: 12px;
+}
+.admin_text h5 {
+    font-size: 12px;
+
+}

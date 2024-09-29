@@ -1,0 +1,21 @@
+{% extends 'main/add_news_layout.html' %}
+{% load static %}
+
+{% block title %} Sepira - Add News {% endblock %}
+
+{% block header_title %} Add News {% endblock %}
+
+{% block content %}
+
+<form method="post" class="add_news_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add News</button>
+</form>
+
+
+<footer class="footer">
+        Powered by Sepira
+    </footer>
+
+{% endblock %}
