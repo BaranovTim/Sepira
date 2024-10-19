@@ -11,7 +11,7 @@ services:
       - pgdb
 
   pgdb:
-    image: postgres
+    image: bitnami/postgresql
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
