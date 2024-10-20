@@ -10,6 +10,4 @@ RUN apt-get update && apt-get install -y \
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-# Check if we are running in a Linux container and exclude pywin32 installation
-RUN if [ "$(uname -s)" != "Linux" ]; then pip install pywin32; fi
 
