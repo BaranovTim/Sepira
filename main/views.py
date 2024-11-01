@@ -5,12 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import News
 from .forms import NewsForm
-from win10toast import ToastNotifier
+#from win10toast import ToastNotifier
 # Create your views here.
 
-def notification(title, message):
-    toast = ToastNotifier()
-    toast.show_toast(title, message, duration=3)
+#def notification(title, message):
+ #   toast = ToastNotifier()
+    #toast.show_toast(title, message, duration=3)
 
 def home(request):
     return render(request,'main/index.html')
@@ -32,7 +32,7 @@ def add_news(request):
             news = form.save(commit=False)
             news.user = request.user  # Set the logged-in user
             news.save()
-            notification('Success!', "News has been added")
+            #notification('Success!', "News has been added")
             return redirect('home')
     else:
         form = NewsForm()
