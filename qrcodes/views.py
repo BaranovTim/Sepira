@@ -10,7 +10,7 @@ from datetime import datetime
 import qrcode
 import pygame
 import os
-from win10toast import ToastNotifier
+#from win10toast import ToastNotifier
 from django.contrib.auth.decorators import login_required
 
 
@@ -22,9 +22,9 @@ pygame.mixer.init()
 sounds_directory = r'C:\Users\Admin\Desktop\Dima_Proj\warehouse\qrcodes\sounds'
 sound_file_path = os.path.join(sounds_directory, 'qr-code-scan-beep.mp3')
 
-def notification(title, message):
-    toast = ToastNotifier()
-    toast.show_toast(title, message, duration=3)
+#def notification(title, message):
+ #   toast = ToastNotifier()
+ #   toast.show_toast(title, message, duration=3)
 
 def play_sound():
     pygame.mixer.music.load(sound_file_path)
@@ -40,7 +40,7 @@ def qr_scanner(request):
     if not cap.isOpened():
         cap.release()
         cv2.destroyAllWindows()
-        notification('Error','Your camera is not connected' )
+        #notification('Error','Your camera is not connected' )
         return redirect('home')
     cv2.namedWindow("Scanner")
 
@@ -53,7 +53,7 @@ def qr_scanner(request):
         if not success:
             cap.release()
             cv2.destroyAllWindows()
-            notification('Error', 'Your camera is not working' )
+            #notification('Error', 'Your camera is not working' )
             return redirect('home')
 
         cv2.line(frame, (620, 5), (635, 20), (0, 0, 0), 2)  # Crosshair line 1
@@ -137,7 +137,7 @@ def add_item(request):
         item.save()
 
 
-        notification('Item has been added!',f'Item {item.name} has been successfully added!')
+        #notification('Item has been added!',f'Item {item.name} has been successfully added!')
         return redirect('home')
 
     return render(request, 'qrcodes/add_item.html')
