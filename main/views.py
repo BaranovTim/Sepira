@@ -13,7 +13,7 @@ def notification(title, message):
     toast.show_toast(title, message, duration=3)
 
 def home(request):
-    return render(request,'main/home.html')
+    return render(request,'main/index.html')
 
 @login_required(login_url='profile')
 def info(request):
