@@ -1,13 +1,16 @@
 FROM python:3.10
 WORKDIR /usr/src/app
 
+# Установка необходимых библиотек, включая zbar
 RUN apt-get update && apt-get install -y \
     libsdl2-dev \
     libsdl2-image-dev \
     libsdl2-mixer-dev \
     libsdl2-ttf-dev \
+    zbar-tools \
     && apt-get clean
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# Остальные команды, если нужно

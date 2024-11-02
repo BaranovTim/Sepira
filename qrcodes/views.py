@@ -8,27 +8,16 @@ from django.contrib.auth.models import User
 from pyzbar.pyzbar import decode
 from datetime import datetime
 import qrcode
-import pygame
 import os
 #from win10toast import ToastNotifier
 from django.contrib.auth.decorators import login_required
 
 
 scanning_active = True
-pygame.mixer.init()
-
-
-# Путь к звуковому файлу для сканирования
-sounds_directory = r'C:\Users\Admin\Desktop\Dima_Proj\warehouse\qrcodes\sounds'
-sound_file_path = os.path.join(sounds_directory, 'qr-code-scan-beep.mp3')
 
 #def notification(title, message):
  #   toast = ToastNotifier()
  #   toast.show_toast(title, message, duration=3)
-
-def play_sound():
-    pygame.mixer.music.load(sound_file_path)
-    pygame.mixer.music.play()
 
 @login_required(login_url='profile')
 def qr_scanner(request):
@@ -75,7 +64,6 @@ def qr_scanner(request):
                     if 'action_return' in current_url:
                         QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='returned')
 
-                    play_sound()
                     cap.release()
                     cv2.destroyAllWindows()
                     return redirect('quantity/')
