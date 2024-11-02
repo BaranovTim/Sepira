@@ -9,8 +9,6 @@ RUN apt-get update && apt-get install -y \
     zbar-tools \
     && apt-get clean \
 
-CMD ["sh", "-c", "wait-for-it pgdb:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
-
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
