@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from .models import QRScan, Warehouse_stock
 from .models import Item
 from django.contrib.auth.models import User
-from pyzbar.pyzbar import decode
 from datetime import datetime
 import qrcode
 import os
@@ -36,6 +35,9 @@ def qr_scanner(request):
     fps = 30
     cap.set(cv2.CAP_PROP_FPS, fps)
 
+    # Use OpenCV's QR code detector
+    qr_code_detector = cv2.QRCodeDetector()
+
     while True:
         success, frame = cap.read()
 
@@ -48,29 +50,31 @@ def qr_scanner(request):
         cv2.line(frame, (620, 5), (635, 20), (0, 0, 0), 2)  # Crosshair line 1
         cv2.line(frame, (635, 5), (620, 20), (0, 0, 0), 2)  # Crosshair line 2
 
-        detected_barcodes = decode(frame)
-        if detected_barcodes:
-            for barcode in detected_barcodes:
-                barcode_data = barcode.data.decode('utf-8')
-                try:
-                    item = Item.objects.get(name=barcode_data)
+        # Detect and decode QR code
+        data, _, _ = qr_code_detector.detectAndDecode(frame)
+        if data:
+            barcode_data = data.strip()
+            try:
+                item = Item.objects.get(name=barcode_data)
 
-                    if 'action_add' in current_url:
-                        QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='added')
-                    if 'action_take' in current_url:
-                        QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='took')
-                    if 'action_remove' in current_url:
-                        QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='removed')
-                    if 'action_return' in current_url:
-                        QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='returned')
+                if 'action_add' in current_url:
+                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='added')
+                if 'action_take' in current_url:
+                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='took')
+                if 'action_remove' in current_url:
+                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(),
+                                          action='removed')
+                if 'action_return' in current_url:
+                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(),
+                                          action='returned')
 
-                    cap.release()
-                    cv2.destroyAllWindows()
-                    return redirect('quantity/')
-                except Item.DoesNotExist:
-                    cap.release()
-                    cv2.destroyAllWindows()
-                    return redirect('home')  # or another error page
+                cap.release()
+                cv2.destroyAllWindows()
+                return redirect('quantity/')
+            except Item.DoesNotExist:
+                cap.release()
+                cv2.destroyAllWindows()
+                return redirect('home')  # or another error page
 
         cv2.imshow('Scanner', frame)
 
