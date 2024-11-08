@@ -10,6 +10,9 @@ services:
     depends_on:
       - pgdb
 
+    networks:
+      - app-network
+
 
   pgdb:
     image: bitnami/postgresql
@@ -20,6 +23,10 @@ services:
     container_name: pgdb
     ports:
       - "5432:5432"
+
+    networks:
+      - app-network
+
 
     volumes:
       - pgdb:/var/lib/postgresql/data/
