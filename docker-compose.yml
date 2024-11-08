@@ -10,6 +10,7 @@ services:
     depends_on:
       - pgdb
 
+
   pgdb:
     image: bitnami/postgresql
     environment:
@@ -25,3 +26,8 @@ services:
 
 volumes:
   pgdb: {}
+
+
+networks:
+  app-network:
+    driver: bridge
