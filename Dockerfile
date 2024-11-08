@@ -6,8 +6,7 @@ RUN apt-get update && apt-get install -y \
     libsdl2-image-dev \
     libsdl2-mixer-dev \
     libsdl2-ttf-dev \
-    zbar-tools \
-    libzbar0 \
+    postgresql-client \
     && apt-get clean
 
 COPY requirements.txt .
