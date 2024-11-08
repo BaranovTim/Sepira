@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'Warehouse_4',
         'USER': 'postgres',
         'PASSWORD': 'Tim597707',
-        'HOST': 'localhost',
+        'HOST': 'pgdb',
         'PORT': 5432
     }
 }
