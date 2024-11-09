@@ -15,7 +15,7 @@ import json
 
 @login_required(login_url='profile')
 def qr_scanner(request):
-    return render(request, 'qr_scanner.html')
+    return render(request, 'qrcodes/qr_scanner.html')
 
 @csrf_exempt
 @login_required(login_url='profile')
@@ -25,15 +25,17 @@ def process_qr_scan(request):
         try:
             item = Item.objects.get(name=data)
             # Дальнейшая обработка, как в вашем коде
-            QRScan.objects.create(
-                scanned_by=request.user,
-                item=item,
-                scanned_at=datetime.now(),
-                action='added'  # Здесь задайте нужное действие
-            )
-            return JsonResponse({"redirect": "/quantity/"})
+            if 'action_add' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='added')
+            if 'action_take' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='took')
+            if 'action_remove' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='removed')
+            if 'action_return' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='returned')
+            return redirect('quantity/')
         except Item.DoesNotExist:
-            return JsonResponse({"redirect": "/home/"})
+            return redirect('home/')
 
 def add_item(request):
     if request.method == 'POST':
