@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'Warehouse_4',
         'USER': 'postgres',
         'PASSWORD': 'Tim597707',
-        'HOST': 'pgdb' if os.getenv('DOCKER_ENV') else 'localhost',
+        'HOST': 'localhost',
         'PORT': 5432
     }
 }
