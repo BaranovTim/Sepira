@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.qr_scanner, name='scanner'),
+    path('process_qr_scan/', views.process_qr_scan, name='process_qr_scan'),
     path('add_item/', views.add_item, name='add_item'),
     path('quantity/', include('quantity.urls'))
 
