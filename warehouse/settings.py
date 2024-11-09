@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-edj1d&n_d7!)$-n7p7b9hg7b7$bi_x41v(pq8o389p0$(n-n)p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sepiraexample.shop', 'www.sepiraexample.shop', '127.0.0.1']
+ALLOWED_HOSTS = ['sepiraexample.shop', 'www.sepiraexample.shop', '127.0.0.1', 'sepira-3.onrender.com']
 
 
 # Application definition
