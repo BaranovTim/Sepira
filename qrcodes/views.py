@@ -103,7 +103,7 @@ def add_item(request):
 
         # Generate QR code
         qr_code = qrcode.make(name)
-        qr_directory = r'media\qrcodes'
+        qr_directory = os.path.join('media', 'qrcodes')
         os.makedirs(qr_directory, exist_ok=True)  # Ensure directory exists
         file_path = os.path.join(qr_directory, f'{name}.png')
 
