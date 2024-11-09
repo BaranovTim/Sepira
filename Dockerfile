@@ -10,5 +10,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 COPY requirements.txt .
+COPY wait-for-it.sh /usr/src/app/wait-for-it.sh
 RUN pip install -r requirements.txt
 
