@@ -145,5 +145,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
 
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://sepira-3.onrender.com',
+]
