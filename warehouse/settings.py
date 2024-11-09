@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'warehouse.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Warehouse_5',
+        'NAME': '',
         'USER': 'postgres',
         'PASSWORD': 'Tim597707',
         'HOST': 'localhost',
