@@ -8,89 +8,40 @@ from django.contrib.auth.models import User
 from datetime import datetime
 import qrcode
 import os
-#from win10toast import ToastNotifier
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.utils.timezone import now
 
-
-scanning_active = True
-
-#def notification(title, message):
- #   toast = ToastNotifier()
- #   toast.show_toast(title, message, duration=3)
 
 @login_required(login_url='profile')
 def qr_scanner(request):
-    global scanning_active
-    current_url = request.path
+    return render(request, 'qrcodes/qr_scanner.html')
 
-    # Camera
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    if not cap.isOpened():
-        cap.release()
-        cv2.destroyAllWindows()
-        #notification('Error','Your camera is not connected' )
-        return redirect('home')
-    cv2.namedWindow("Scanner")
+@csrf_exempt
+@login_required(login_url='profile')
+def process_qr_scan(request):
+    if request.method == "POST":
+        data = request.POST.get("data", "").strip()
+        try:
+            item = Item.objects.get(name=data)
+            action = None
 
-    fps = 30
-    cap.set(cv2.CAP_PROP_FPS, fps)
+            if 'action_add' in request.path:
+                action = 'added'
+            elif 'action_take' in request.path:
+                action = 'took'
+            elif 'action_remove' in request.path:
+                action = 'removed'
+            elif 'action_return' in request.path:
+                action = 'returned'
 
-    # Use OpenCV's QR code detector
-    qr_code_detector = cv2.QRCodeDetector()
+            if action:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=now(), action=action)
+                return redirect('quantity')
 
-    while True:
-        success, frame = cap.read()
-
-        if not success:
-            cap.release()
-            cv2.destroyAllWindows()
-            #notification('Error', 'Your camera is not working' )
+        except Item.DoesNotExist:
             return redirect('home')
-
-        cv2.line(frame, (620, 5), (635, 20), (0, 0, 0), 2)  # Crosshair line 1
-        cv2.line(frame, (635, 5), (620, 20), (0, 0, 0), 2)  # Crosshair line 2
-
-        # Detect and decode QR code
-        data, _, _ = qr_code_detector.detectAndDecode(frame)
-        if data:
-            barcode_data = data.strip()
-            try:
-                item = Item.objects.get(name=barcode_data)
-
-                if 'action_add' in current_url:
-                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='added')
-                if 'action_take' in current_url:
-                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='took')
-                if 'action_remove' in current_url:
-                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(),
-                                          action='removed')
-                if 'action_return' in current_url:
-                    QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(),
-                                          action='returned')
-
-                cap.release()
-                cv2.destroyAllWindows()
-                return redirect('quantity/')
-            except Item.DoesNotExist:
-                cap.release()
-                cv2.destroyAllWindows()
-                return redirect('home')  # or another error page
-
-        cv2.imshow('Scanner', frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            scanning_active = False
-            break
-
-        #if event == cv2.EVENT_LBUTTONDOWN and x >= 635 and y <= 20:
-        #    scanning_active = False
-        #    cap.release()
-        #    cv2.destroyAllWindows()
-         #   return redirect('home')
-
-    cap.release()
-    cv2.destroyAllWindows()
-
 
 def add_item(request):
     if request.method == 'POST':

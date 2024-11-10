@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner</title>
+    <script src="{% static 'qrcodes/js/html5-qrcode.min.js' %}"></script>
+</head>
+<body>
+    <h1>QR Code Scanner</h1>
+    <div id="qr-reader" style="width: 500px;"></div>
+
+    <!-- Форма для отправки данных -->
+    <form id="qr-form" method="POST" action="{% url 'qr_scan' %}">
+        {% csrf_token %}
+        <input type="hidden" name="data" id="qr-data">
+    </form>
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById("qr-data").value = decodedText;
+            document.getElementById("qr-form").submit();  // Отправляем форму
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR Code scan error: ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: { width: 250, height: 250 } });
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+</body>
+</html>
+
