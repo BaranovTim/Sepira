@@ -11,7 +11,10 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
+<<<<<<< HEAD
 from django.utils.timezone import now
+=======
+>>>>>>> f46439a400050389cba3f654b996178bc6a4753b
 
 
 @login_required(login_url='profile')
@@ -22,6 +25,7 @@ def qr_scanner(request):
 @login_required(login_url='profile')
 def process_qr_scan(request):
     if request.method == "POST":
+<<<<<<< HEAD
         data = request.POST.get("data", "").strip()
         try:
             item = Item.objects.get(name=data)
@@ -42,6 +46,23 @@ def process_qr_scan(request):
 
         except Item.DoesNotExist:
             return redirect('home')
+=======
+        data = json.loads(request.body).get("data", "").strip()
+        try:
+            item = Item.objects.get(name=data)
+            # Дальнейшая обработка, как в вашем коде
+            if 'action_add' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='added')
+            if 'action_take' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='took')
+            if 'action_remove' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='removed')
+            if 'action_return' in current_url:
+                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='returned')
+            return redirect('quantity/')
+        except Item.DoesNotExist:
+            return redirect('home/')
+>>>>>>> f46439a400050389cba3f654b996178bc6a4753b
 
 def add_item(request):
     if request.method == 'POST':

@@ -5,12 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Scanner</title>
+<<<<<<< HEAD
     <script src="{% static 'qrcodes/js/html5-qrcode.min.js' %}"></script>
+=======
+    <!-- Подключаем библиотеку html5-qrcode -->
+    <script src="{% static 'qrcodes/js/html5-qrcode.min.js' %}"></script>
+
+>>>>>>> f46439a400050389cba3f654b996178bc6a4753b
 </head>
 <body>
     <h1>QR Code Scanner</h1>
     <div id="qr-reader" style="width: 500px;"></div>
 
+<<<<<<< HEAD
     <!-- Форма для отправки данных -->
     <form id="qr-form" method="POST" action="{% url 'qr_scan' %}">
         {% csrf_token %}
@@ -24,6 +31,29 @@
         }
 
         function onScanFailure(error) {
+=======
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            // Отправка данных на сервер
+            fetch("{% url 'process_qr_scan' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ data: decodedText })
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function onScanFailure(error) {
+            // Обработка ошибки
+>>>>>>> f46439a400050389cba3f654b996178bc6a4753b
             console.warn(`QR Code scan error: ${error}`);
         }
 
@@ -33,4 +63,7 @@
     </script>
 </body>
 </html>
+<<<<<<< HEAD
 
+=======
+>>>>>>> f46439a400050389cba3f654b996178bc6a4753b
