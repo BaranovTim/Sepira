@@ -30,9 +30,14 @@
         codeReader
             .listVideoInputDevices()
             .then(videoInputDevices => {
-                if (videoInputDevices.length > 0) {
+                const rearCamera = videoInputDevices.find(device =>
+                    device.label.toLowerCase().includes('back') ||
+                    device.label.toLowerCase().includes('rear')
+                ) || videoInputDevices[0];
+
+                if (rearCamera) {
                     return codeReader.decodeFromVideoDevice(
-                        videoInputDevices[0].deviceId,
+                        rearCamera.deviceId,
                         videoElement,
                         (result, err) => {
                             if (result && scanning) {
@@ -75,7 +80,7 @@
                         }
                     );
                 } else {
-                    alert('No video input devices found.');
+                    alert('No rear camera found. Using default camera.');
                 }
             })
             .catch(err => {
