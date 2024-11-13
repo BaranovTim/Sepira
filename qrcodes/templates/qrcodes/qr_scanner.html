@@ -2,68 +2,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Scanner</title>
-<<<<<<< HEAD
-    <script src="{% static 'qrcodes/js/html5-qrcode.min.js' %}"></script>
-=======
-    <!-- Подключаем библиотеку html5-qrcode -->
-    <script src="{% static 'qrcodes/js/html5-qrcode.min.js' %}"></script>
-
->>>>>>> f46439a400050389cba3f654b996178bc6a4753b
+    <style>
+        #video {
+            width: 100%;
+            height: auto;
+            border: 1px solid #000;
+        }
+    </style>
 </head>
 <body>
-    <h1>QR Code Scanner</h1>
-    <div id="qr-reader" style="width: 500px;"></div>
+    <h1>QR Scanner</h1>
+    <video id="video" autoplay></video>
+    <p id="output">Awaiting scan...</p>
+    <button id="stop">Stop</button>
 
-<<<<<<< HEAD
-    <!-- Форма для отправки данных -->
-    <form id="qr-form" method="POST" action="{% url 'qr_scan' %}">
-        {% csrf_token %}
-        <input type="hidden" name="data" id="qr-data">
-    </form>
-
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
     <script>
-        function onScanSuccess(decodedText, decodedResult) {
-            document.getElementById("qr-data").value = decodedText;
-            document.getElementById("qr-form").submit();  // Отправляем форму
-        }
+        const videoElement = document.getElementById('video');
+        const outputElement = document.getElementById('output');
+        const stopButton = document.getElementById('stop');
 
-        function onScanFailure(error) {
-=======
-    <script>
-        function onScanSuccess(decodedText, decodedResult) {
-            // Отправка данных на сервер
-            fetch("{% url 'process_qr_scan' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"
-                },
-                body: JSON.stringify({ data: decodedText })
-            })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
+        const codeReader = new ZXing.BrowserQRCodeReader();
+        let scanning = true;  // Флаг, чтобы предотвратить повторное сканирование
+
+        // Инициализация сканера
+        codeReader
+            .listVideoInputDevices()
+            .then(videoInputDevices => {
+                if (videoInputDevices.length > 0) {
+                    return codeReader.decodeFromVideoDevice(
+                        videoInputDevices[0].deviceId,
+                        videoElement,
+                        (result, err) => {
+                            if (result && scanning) {
+                                scanning = false; // Отключаем повторное сканирование
+                                outputElement.textContent = `QR Code detected: ${result.text}`;
+                                console.log(result.text);
+
+                                // Остановка сканера
+                                codeReader.reset();
+                                videoElement.srcObject?.getTracks().forEach(track => track.stop());
+
+                                // Отправка данных на сервер
+                                fetch(window.location.pathname, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'X-CSRFToken': '{{ csrf_token }}'
+                                    },
+                                    body: new URLSearchParams({ barcode_data: result.text })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        window.location.href = data.redirect_url;
+                                    } else {
+                                        alert("Не найдено в базе!");
+                                        scanning = true; // Разрешить сканирование снова
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error('Ошибка отправки данных:', err);
+                                    alert('Ошибка отправки данных.');
+                                    scanning = true; // Разрешить сканирование снова
+                                });
+                            }
+
+                            if (err && !(err instanceof ZXing.NotFoundException)) {
+                                console.error('Ошибка сканирования:', err);
+                            }
+                        }
+                    );
+                } else {
+                    alert('No video input devices found.');
                 }
             })
-            .catch(error => console.error("Error:", error));
-        }
+            .catch(err => {
+                console.error('Error accessing video devices:', err);
+                alert('Error accessing camera.');
+            });
 
-        function onScanFailure(error) {
-            // Обработка ошибки
->>>>>>> f46439a400050389cba3f654b996178bc6a4753b
-            console.warn(`QR Code scan error: ${error}`);
-        }
-
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", { fps: 10, qrbox: { width: 250, height: 250 } });
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        // Остановка сканера вручную
+        stopButton.addEventListener('click', () => {
+            codeReader.reset();
+            videoElement.srcObject?.getTracks().forEach(track => track.stop());
+            scanning = false;
+        });
     </script>
 </body>
 </html>
-<<<<<<< HEAD
-
-=======
->>>>>>> f46439a400050389cba3f654b996178bc6a4753b

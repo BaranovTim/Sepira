@@ -1,68 +1,43 @@
-from django.http import JsonResponse
-import cv2
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from .models import QRScan, Warehouse_stock
-from .models import Item
-from django.contrib.auth.models import User
-from datetime import datetime
+from django.shortcuts import redirect
+from .models import Warehouse_stock
 import qrcode
 import os
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-import json
-<<<<<<< HEAD
-from django.utils.timezone import now
-=======
->>>>>>> f46439a400050389cba3f654b996178bc6a4753b
-
+from django.http import JsonResponse
+from django.shortcuts import render
+from datetime import datetime
+from .models import QRScan, Item
 
 @login_required(login_url='profile')
 def qr_scanner(request):
-    return render(request, 'qrcodes/qr_scanner.html')
-
-@csrf_exempt
-@login_required(login_url='profile')
-def process_qr_scan(request):
     if request.method == "POST":
-<<<<<<< HEAD
-        data = request.POST.get("data", "").strip()
+        data = request.POST.get("barcode_data", "").strip()
+        current_url = request.path
         try:
             item = Item.objects.get(name=data)
-            action = None
 
-            if 'action_add' in request.path:
+            action = None
+            if 'action_add' in current_url:
                 action = 'added'
-            elif 'action_take' in request.path:
+            elif 'action_take' in current_url:
                 action = 'took'
-            elif 'action_remove' in request.path:
+            elif 'action_remove' in current_url:
                 action = 'removed'
-            elif 'action_return' in request.path:
+            elif 'action_return' in current_url:
                 action = 'returned'
 
             if action:
-                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=now(), action=action)
-                return redirect('quantity')
+                QRScan.objects.create(
+                    scanned_by=request.user,
+                    item=item,
+                    scanned_at=datetime.now(),
+                    action=action
+                )
+                return JsonResponse({'success': True, 'redirect_url': 'quantity/'})
+        except Item.DoesNotExist:
+            return JsonResponse({'success': False, 'redirect_url': '/home/'})
 
-        except Item.DoesNotExist:
-            return redirect('home')
-=======
-        data = json.loads(request.body).get("data", "").strip()
-        try:
-            item = Item.objects.get(name=data)
-            # Дальнейшая обработка, как в вашем коде
-            if 'action_add' in current_url:
-                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='added')
-            if 'action_take' in current_url:
-                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='took')
-            if 'action_remove' in current_url:
-                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='removed')
-            if 'action_return' in current_url:
-                QRScan.objects.create(scanned_by=request.user, item=item, scanned_at=datetime.now(), action='returned')
-            return redirect('quantity/')
-        except Item.DoesNotExist:
-            return redirect('home/')
->>>>>>> f46439a400050389cba3f654b996178bc6a4753b
+    return render(request, 'qrcodes/qr_scanner.html')
 
 def add_item(request):
     if request.method == 'POST':
@@ -101,7 +76,6 @@ def add_item(request):
         item.save()
 
 
-        #notification('Item has been added!',f'Item {item.name} has been successfully added!')
         return redirect('home')
 
     return render(request, 'qrcodes/add_item.html')
