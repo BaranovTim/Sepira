@@ -1,0 +1,50 @@
+/* qr_scanner.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+}
+
+video {
+    width: 80%;
+    height: 500px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Небольшое свечение вокруг видео */
+    object-fit: cover;
+}
+
+#stop {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+
+
+
+#stop:hover {
+    color: red;
+}
+
+#output {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+a {
+    color: white;
+
+}
