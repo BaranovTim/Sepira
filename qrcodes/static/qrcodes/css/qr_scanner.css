@@ -31,11 +31,6 @@ video {
 }
 
 
-
-#stop:hover {
-    color: red;
-}
-
 #output {
     position: absolute;
     bottom: 10px;
