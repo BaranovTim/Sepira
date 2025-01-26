@@ -30,6 +30,10 @@ ALLOWED_HOSTS = ['sepiraexample.shop', 'www.sepiraexample.shop', '127.0.0.1', 's
 
 PORT = os.environ.get('PORT', '8001')  # Default to 8000 if PORT is not set
 
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 # Application definition
 
 INSTALLED_APPS = [
