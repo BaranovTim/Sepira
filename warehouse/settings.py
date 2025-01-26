@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['sepiraexample.shop', 'www.sepiraexample.shop', '127.0.0.1', 'sepira-3.onrender.com']
 
+PORT = os.environ.get('PORT', '8001')  # Default to 8000 if PORT is not set
 
 # Application definition
 
@@ -84,15 +85,11 @@ WSGI_APPLICATION = 'warehouse.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Warehouse_4',
-        'USER': 'postgres',
-        'PASSWORD': 'Tim597707',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'NAME': 'sepira_example_al30',
     }
 }
 
-DATABASES['default'] = ddu.parse('postgresql://sepira_example_user:UmTaFJdtMwbl1qTT262Qun7mNP2GCwNc@dpg-csnc8bm8ii6s73e9g980-a.frankfurt-postgres.render.com/sepira_example')
+DATABASES['default'] = ddu.parse('postgresql://sepira_example_al30_user:9K45IJcWq2feV3jM12W3c1aFN08qJzTp@dpg-cuaqpa23esus73eoeci0-a.frankfurt-postgres.render.com/sepira_example_al30')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
