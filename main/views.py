@@ -32,7 +32,6 @@ def add_news(request):
             news = form.save(commit=False)
             news.user = request.user  # Set the logged-in user
             news.save()
-            #notification('Success!', "News has been added")
             return redirect('home')
     else:
         form = NewsForm()
