@@ -28,10 +28,7 @@
 
                     <div class="item_qrcode">
                         <h2 class="qrcode_name">Qrcode</h2>
-                        <img src="{{ item.item.qr_code.url }}">
-                        <a href="{{ item.item.qr_code.url }}" download="{{ item.item.name }}_qrcode.png">
-                            <button type="button">Download</button>
-                        </a>
+                        <img src="data:image/png;base64,{{ item.item.qr_code_base64 }}">
                     </div>
 
 

@@ -39,6 +39,9 @@ def qr_scanner(request):
 
     return render(request, 'qrcodes/qr_scanner.html')
 
+import io
+import base64
+
 def add_item(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -50,31 +53,34 @@ def add_item(request):
 
         # Generate QR code
         qr_code = qrcode.make(name)
-        qr_directory = os.path.join('media', 'qrcodes')
-        os.makedirs(qr_directory, exist_ok=True)  # Ensure directory exists
-        file_path = os.path.join(qr_directory, f'{name}.png')
 
-        # Save the QR code image
-        qr_code.save(file_path)
+        # Сохранение QR-кода в формате Base64
+        buffer = io.BytesIO()
+        qr_code.save(buffer, format="PNG")
+        buffer.seek(0)
+        qr_code_base64 = base64.b64encode(buffer.getvalue()).decode()
 
         # Create and save the new item in the database
-        item = Item.objects.create(name=name, description=description, qr_code=f'qrcodes/{name}.png')  # Save relative path
+        item = Item.objects.create(
+            name=name,
+            description=description,
+            qr_code_base64=qr_code_base64
+        )
         Warehouse_stock.objects.create(item=item, quantity=0)
         item.save()
 
-        if item.id >=1 and item.id <= 100 :
+        # Set location_name
+        if 1 <= item.id <= 100:
             item.location_name = 'A1'
-        if item.id >=101 and item.id <= 200 :
+        elif 101 <= item.id <= 200:
             item.location_name = 'A2'
-        if item.id >=201 and item.id <= 300 :
+        elif 201 <= item.id <= 300:
             item.location_name = 'A3'
-        if item.id >=301 and item.id <= 400 :
+        elif 301 <= item.id <= 400:
             item.location_name = 'A4'
-        if item.id >=401 and item.id <= 500 :
+        elif 401 <= item.id <= 500:
             item.location_name = 'A5'
-
         item.save()
-
 
         return redirect('home')
 

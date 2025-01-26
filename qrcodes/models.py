@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Item(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    qr_code = models.ImageField(upload_to='media/qrcodes')
+    qr_code_base64 = models.TextField(blank=True, null=True)  # QR-код в формате Base64
     location = models.ImageField(upload_to='media/location', null=True)
     location_name = models.CharField(max_length=100, null=True)
 
