@@ -46,10 +46,15 @@ def add_item(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
+        location_name = request.POST.get('location_name')
+        new_location = request.POST.get('new_location')
 
-        # Validate input
-        if not name:
-            return JsonResponse({'status': 'error', 'message': 'Name is required'})
+        # Если выбрано "Add new", сохраняем новую локацию
+        if location_name == "add" and new_location:
+            location_name = new_location
+
+        if not name or not location_name:
+            return JsonResponse({'status': 'error', 'message': 'Name and Location are required'})
 
         # Generate QR code
         qr_code = qrcode.make(name)
@@ -64,24 +69,14 @@ def add_item(request):
         item = Item.objects.create(
             name=name,
             description=description,
-            qr_code_base64=qr_code_base64
+            qr_code_base64=qr_code_base64,
+            location_name=location_name
+
         )
         Warehouse_stock.objects.create(item=item, quantity=0)
         item.save()
 
-        # Set location_name
-        if 1 <= item.id <= 100:
-            item.location_name = 'A1'
-        elif 101 <= item.id <= 200:
-            item.location_name = 'A2'
-        elif 201 <= item.id <= 300:
-            item.location_name = 'A3'
-        elif 301 <= item.id <= 400:
-            item.location_name = 'A4'
-        elif 401 <= item.id <= 500:
-            item.location_name = 'A5'
-        item.save()
-
         return redirect('home')
 
-    return render(request, 'qrcodes/add_item.html')
+    locations = Item.objects.values("location_name").distinct()
+    return render(request, 'qrcodes/add_item.html', {'locations': locations})

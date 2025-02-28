@@ -7,25 +7,42 @@
 
 {% block content %}
 
-<div class="find_item">
-    <form method="GET" action="">
-        <input type="text" name="item" placeholder="Search items..." value="{{ request.GET.item }}">
-        <button type="submit">Search</button>
-    </form>
+<div class="top_stock">
+    <!-- Поиск -->
+    <div class="find_item">
+        <form method="GET" action="">
+            <input type="text" name="item" placeholder="Search items..." value="{{ request.GET.item }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Сортировка -->
+    <div class="sort_items">
+        <form method="get">
+            <input type="hidden" name="item" value="{{ request.GET.item }}">
+            <label for="sort">Sort By:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="nameaz" {% if request.GET.sort == 'nameaz' %}selected{% endif %}>Name a-z</option>
+                <option value="nameza" {% if request.GET.sort == 'nameza' %}selected{% endif %}>Name z-a</option>
+                <option value="location" {% if request.GET.sort == 'location' %}selected{% endif %}>Location</option>
+                <option value="instock" {% if request.GET.sort == 'instock' %}selected{% endif %}>In stock</option>
+                <option value="outstock" {% if request.GET.sort == 'outstock' %}selected{% endif %}>Out of stock</option>
+            </select>
+        </form>
+    </div>
 </div>
-
-
+<!-- Список товаров -->
 <div class="items">
     {% for item in items %}
         <div class="item">
-
             <details>
                 <summary>
-                    <span class="item_name"> {{item.item.name}} </span>
-                    <span class="item_quantity"> {{item.quantity}} </span>
+                    <span class="item_name"> {{ item.item.name }} </span>
+                    <span class="item_quantity"> {{ item.quantity }} </span>
                 </summary>
                 <div class="item_details">
-
+                    <!-- QR-код -->
                     <div class="item_qrcode">
                         <h2 class="qrcode_name">Qrcode</h2>
                         <img src="data:image/png;base64,{{ item.item.qr_code_base64 }}">
@@ -34,12 +51,12 @@
                         </a>
                     </div>
 
-
+                    <!-- Информация о товаре -->
                     <div class="item_info">
                         <h2 class="info_name">Info</h2>
-                        <img src=r"{{item.item.location}}">
-                        <h5>Location: {{item.item.location_name}}</h5>
-                        <h5>Quantity : {{item.quantity}}</h5>
+                        <img src="{{ item.item.location }}">
+                        <h5>Location: {{ item.item.location_name }}</h5>
+                        <h5>Quantity: {{ item.quantity }}</h5>
                     </div>
                 </div>
             </details>

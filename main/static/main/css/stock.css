@@ -4,9 +4,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    font-size: 18px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 18px;
     background-color: #1D1D1D;
     color: #d5d5d5;
 
@@ -75,25 +75,7 @@ body {
     border-radius: 3px;
 }
 
-.find_item {
-    padding-left: 6%;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.find_item input {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    background-color: #595858;
-    color: #d5d5d5;
-    text-align: center;
-    width: 200px;
-    border: None;
-    border-radius: 20px;
-    height: 35px;
-}
 
 button {
     font-family: 'Open Sans', sans-serif;
@@ -179,4 +161,50 @@ details > details {
 
 details > details summary::after {
     display: none; /* Убираем подчеркивание для вложенных секций */
+}
+
+.top_stock {
+    padding-left: 1rem;
+    padding-top: 1rem;
+    display: flex; /* Используем flex-контейнер */
+    justify-content: space-between; /* Распределяем элементы по краям */
+}
+
+.sort_items label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 15px;
+}
+.sort_items select {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    background-color: #595858;
+    color: #d5d5d5;
+    text-align: center;
+    width: 120px;
+    border: None;
+    border-radius: 20px;
+    height: 30px;
+    appearance: none; /* Убирает системные стили */
+
+}
+.sort_items option {
+    background-color: transparent;
+    border-color: #85fa4b;
+    border: 2px;
+    border-radius: 20px;
+    gap: 3px;
+}
+
+.find_item input {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    background-color: #595858;
+    color: #d5d5d5;
+    text-align: center;
+    width: 200px;
+    border: None;
+    border-radius: 20px;
+    height: 35px;
 }

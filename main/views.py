@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from qrcodes.models import QRScan, Warehouse_stock
+from qrcodes.models import QRScan, Warehouse_stock, Item
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import News
@@ -77,3 +77,28 @@ def stock(request):
 
     return render(request, 'main/stock.html', {'items': items})
 
+def stock(request):
+    query = request.GET.get('item', '')  # Поиск
+    sort_option = request.GET.get('sort', 'newest')  # Сортировка
+
+    items = Warehouse_stock.objects.all()
+
+    # Фильтрация по названию товара (если есть запрос)
+    if query:
+        items = items.filter(item__name__icontains=query)
+
+    # Сортировка
+    if sort_option == 'newest':
+        items = items.order_by('-id')
+    elif sort_option == 'nameaz':
+        items = items.order_by('item__name')
+    elif sort_option == 'nameza':
+        items = items.order_by('-item__name')
+    elif sort_option == 'location':
+        items = items.order_by('item__location_name')
+    elif sort_option == 'instock':
+        items = items.filter(quantity__gt=0)
+    elif sort_option == 'outstock':
+        items = items.filter(quantity__exact=0)
+
+    return render(request, 'main/stock.html', {'items': items, 'query': query, 'sort_option': sort_option})
