@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'warehouse.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-'''
+
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -96,9 +96,9 @@ DATABASES = {
 }
 
 DATABASES['default'] = ddu.parse('postgresql://sepira_example_al30_user:9K45IJcWq2feV3jM12W3c1aFN08qJzTp@dpg-cuaqpa23esus73eoeci0-a.frankfurt-postgres.render.com/sepira_example_al30')
+
+
 '''
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -109,7 +109,7 @@ DATABASES = {
         'PORT': 5432
     }
 }
-
+'''
 
 
 # Password validation
