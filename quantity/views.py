@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from rest_framework.exceptions import PermissionDenied
+
 from qrcodes.models import QRScan, Warehouse_stock
 from django.contrib.auth.decorators import login_required
 
@@ -20,9 +22,15 @@ def quantity(request):
             if 'action_add' in current_url:
                 stock.quantity += quantity
             if 'action_take' in current_url:
-                stock.quantity = max(stock.quantity - quantity, 0)
+                if stock.quantity - quantity < 0:
+                    raise PermissionDenied
+                else:
+                    stock.quantity = max(stock.quantity - quantity, 0)
             if 'action_remove' in current_url:
-                stock.quantity = max(stock.quantity - quantity, 0)
+                if stock.quantity - quantity < 0:
+                    raise PermissionDenied
+                else:
+                    stock.quantity = max(stock.quantity - quantity, 0)
             if 'action_return' in current_url:
                 stock.quantity += quantity
 
