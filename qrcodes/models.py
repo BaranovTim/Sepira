@@ -26,10 +26,12 @@ class QRScan(models.Model):
     scanned_at = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(default=0)
     action = models.CharField(max_length=50)
+    invoice_photo = models.ImageField(upload_to='media', null=True, blank=True)
+    invoice_id = models.CharField(max_length=100, null=True, blank=True)
 
     def formatted_scanned_at(self):
         # Преобразование времени в формат без миллисекунд и временной зоны
         return self.scanned_at.strftime('%Y-%m-%d %H:%M:%S')
 
     def __str__(self):
-        return f"{self.scanned_by} has {self.action} {self.quantity} {self.item.name}(s) {self.formatted_scanned_at()}"
+        return f"{self.scanned_by} {self.action} {self.quantity} {self.item.name}(s) {self.formatted_scanned_at()}"

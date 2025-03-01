@@ -10,6 +10,12 @@
 {% if actions %}
     <div class="actions_true">
     {% if user.is_staff %}
+            <div class="download_scans">
+                <form action="{% url 'download_qrscans_csv' %}" method="get">
+                    <button type="submit">Download CSV</button>
+                </form>
+            </div>
+
             <div class="actions">
                 <ul>
                     {% for action_all in actions_all %}

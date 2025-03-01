@@ -132,5 +132,20 @@ ul {
     align-items: center;
     flex-direction: column;
     margin-right: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
 
+}
+
+.download_scans {
+    display: flex;
+    justify-content: right;
+    margin: 1rem;
+}
+.download_scans button {
+    border: None;
+    border-radius: 20px;
+    background-color: #85fa4b;
+    width: 150px;
+    height: 30px;
 }

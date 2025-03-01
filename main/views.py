@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import News
 from .forms import NewsForm
+import io
+import base64
 #from win10toast import ToastNotifier
 # Create your views here.
 
@@ -65,18 +67,6 @@ def add_user(request):
 
 
 @login_required(login_url='profile')
-def stock(request):
-    query = request.GET.get('item')  # Получаем поисковый запрос
-
-    if query:
-        # Фильтруем элементы по имени (case-insensitive поиск)
-        items = Warehouse_stock.objects.filter(item__name__icontains=query)
-    else:
-        # Если запрос не передан, отображаем все элементы
-        items = Warehouse_stock.objects.order_by('quantity')
-
-    return render(request, 'main/stock.html', {'items': items})
-
 def stock(request):
     query = request.GET.get('item', '')  # Поиск
     sort_option = request.GET.get('sort', 'newest')  # Сортировка
