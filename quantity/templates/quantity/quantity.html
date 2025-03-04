@@ -6,6 +6,9 @@
 {% block header_title %} Quantity {% endblock %}
 
 {% block content %}
+<div class="parent">
+    <i class="fas fa-cubes-stacked "></i>
+</div>
 <div class="scan_data">
     <form method="post">
         {% csrf_token %}
@@ -17,8 +20,13 @@
 
             <div class="invoice">
                 <br><span>Insert ID or Image of the Invoice</span>
-                <br><input type="number" id="invoice_id" name="invoice_id" placeholder="id" style="width: 100px;">
-                <input type="file" id="invoice_image" name="invoice_image" accept="image/*" style="width: 100px;">
+                <div class="invoice_inputs">
+                    <br> <input type="number" id="invoice_id" name="invoice_id" placeholder="id">
+                    <label for="invoice_image" class="custom-file-upload">
+                        Choose the file
+                    </label>
+                    <input type="file" id="invoice_image" name="invoice_image" accept="image/*">
+                </div>
             </div>
 
             <br><button type="submit">Confirm</button>
@@ -29,4 +37,10 @@
         Powered by Sepira
     </footer>
 
+    <script>
+            document.getElementById("invoice_image").addEventListener("change", function () {
+            let fileName = this.files.length > 0 ? this.files[0].name : "Файл не выбран";
+            document.getElementById("file-name").textContent = fileName;
+        });
+    </script>
 {% endblock %}

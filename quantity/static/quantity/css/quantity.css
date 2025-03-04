@@ -75,7 +75,7 @@ body {
 }
 
 
-input {
+.quantity input {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     background-color: #474646;
@@ -84,8 +84,12 @@ input {
     width: 300px;
     border: None;
     border-radius: 20px;
-    margin-top: 30px;
+    margin-top: 10px;
     height: 50px;
+}
+#invoice_id::placeholder {
+    color: #d5d5d5;
+    opacity: 1;
 }
 
 button {
@@ -101,4 +105,63 @@ button {
     height: 30px;
     cursor: pointer;
 
+}
+
+.fas {
+    font-size: 200px;
+    color: #d5d5d5;
+}
+.parent {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.invoice {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.invoice_inputs {
+    flex-direction: row;
+    margin-top: -1rem;
+}
+.scan_data button {
+    margin-top: 2rem;
+    margin-left: 1rem;
+}
+
+#invoice_id {
+    text-align: center;
+    width: 150px;
+    height: 44px;
+    border-radius: 5px;
+    background-color: #474646;
+    color: #d5d5d5;
+    border: none;
+    font-size: 16px;
+}
+#invoice_id input {
+    color: #d5d5d5;
+}
+
+input[type="file"] {
+    display: none; /* Скрываем стандартный input */
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #474646;
+    color: #d5d5d5;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+}
+
+.custom-file-upload:hover {
+    background-color: #45a049;
 }
