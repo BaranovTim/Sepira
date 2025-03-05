@@ -26,7 +26,7 @@ class QRScan(models.Model):
     scanned_at = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(default=0)
     action = models.CharField(max_length=50)
-    invoice_photo = models.ImageField(upload_to='media', null=True, blank=True)
+    invoice_photo = models.ImageField(upload_to='invoices/', null=True, blank=True)
     invoice_id = models.CharField(max_length=100, null=True, blank=True)
 
     def formatted_scanned_at(self):

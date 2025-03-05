@@ -10,7 +10,7 @@
     <i class="fas fa-cubes-stacked "></i>
 </div>
 <div class="scan_data">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
             <div class="quantity">
@@ -25,7 +25,12 @@
                     <label for="invoice_image" class="custom-file-upload">
                         Choose the file
                     </label>
-                    <input type="file" id="invoice_image" name="invoice_image" accept="image/*">
+                        <input type="file" id="invoice_image" name="invoice_image" accept="image/*">
+                    {% if last_scan and last_scan.invoice_photo%}
+                        <span class="invoice_photo_name">{{ last_scan.invoice_photo }}</span>
+                    {% endif %}
+
+
                 </div>
             </div>
 

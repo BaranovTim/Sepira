@@ -165,3 +165,9 @@ input[type="file"] {
 .custom-file-upload:hover {
     background-color: #45a049;
 }
+
+.invoice_photo_name {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: right;
+}

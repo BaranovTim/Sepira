@@ -17,7 +17,7 @@ from django.http import HttpResponse
 
 def download_qrscans_csv(request):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="qrscans.csv"'
+    response['Content-Disposition'] = 'attachment; filename="qr-scans.csv"'
 
     writer = csv.writer(response)
     writer.writerow(["Scanned By", "Action", "Quantity", "Item Name", "Scanned At", 'Invoice photo', 'Invoice id'])
@@ -29,7 +29,7 @@ def download_qrscans_csv(request):
             scan.quantity,
             scan.item.name,
             scan.scanned_at,
-            scan.invoice_photo,
+            scan.invoice_photo.url,
             scan.invoice_id
         ])
 
@@ -47,7 +47,8 @@ def quantity(request):
 
         try:
             invoice_id = int(request.POST.get('invoice_id'))
-            invoice_image = request.POST.get('invoice_image')
+            invoice_image = request.FILES.get('invoice_image')
+            last_scan.invoice_photo = invoice_image  # Теперь это файл
         except (TypeError, ValueError):
             invoice_id = None
             invoice_image = None
