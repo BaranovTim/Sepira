@@ -29,7 +29,7 @@ def download_qrscans_csv(request):
             scan.quantity,
             scan.item.name,
             scan.scanned_at,
-            scan.invoice_photo.url,
+            scan.invoice_photo.url if scan.invoice_photo else scan.invoice_photo,
             scan.invoice_id
         ])
 
@@ -43,41 +43,54 @@ def quantity(request):
     stock = Warehouse_stock.objects.get(item=last_scan.item)
 
     if request.method == 'POST':
-        quantity = int(request.POST.get('quantity'))
+        quantity = int(request.POST.get('quantity', 0))
 
+        # Получаем файл
+        invoice_image = request.FILES.get('invoice_image')
+
+        # Пытаемся получить ID
         try:
             invoice_id = int(request.POST.get('invoice_id'))
-            invoice_image = request.FILES.get('invoice_image')
-            last_scan.invoice_photo = invoice_image  # Теперь это файл
         except (TypeError, ValueError):
             invoice_id = None
-            invoice_image = None
 
-        if 1 <= quantity:
+        # Проверяем, что хотя бы одно из полей заполнено
+        if not invoice_id and not invoice_image:
+            notification('You have to add an id or a photo of an invoice', 'InvoiceError')
+            return redirect(request.path)  # Перезагружаем страницу с ошибкой
+
+        if quantity >= 1:
             last_scan.quantity = quantity
             last_scan.invoice_id = invoice_id
-            last_scan.invoice_photo = invoice_image
+
+            # Сохраняем фото, если загружено
+            if invoice_image:
+                last_scan.invoice_photo = invoice_image
+
             last_scan.save()
 
+            # Обновление количества на складе
             if 'action_add' in current_url:
                 stock.quantity += quantity
                 stock.save()
-
                 return redirect('home')
+
             if 'action_take' in current_url:
-                if (stock.quantity - quantity) < 0:
-                    notification('Not enough items in a warehouse, please insert the right quantity', 'AmountError')
+                if stock.quantity - quantity < 0:
+                    messages.error(request, 'Not enough items in the warehouse.')
                 else:
                     stock.quantity = max(stock.quantity - quantity, 0)
                     stock.save()
                     return redirect('home')
+
             if 'action_remove' in current_url:
-                if (stock.quantity - quantity) < 0:
-                    notification('Not enough items in a warehouse, please insert the right quantity', 'AmountError')
+                if stock.quantity - quantity < 0:
+                    messages.error(request, 'Not enough items in the warehouse.')
                 else:
                     stock.quantity = max(stock.quantity - quantity, 0)
                     stock.save()
                     return redirect('home')
+
             if 'action_return' in current_url:
                 stock.quantity += quantity
                 stock.save()

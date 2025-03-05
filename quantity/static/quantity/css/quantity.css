@@ -166,7 +166,7 @@ input[type="file"] {
     background-color: #45a049;
 }
 
-.invoice_photo_name {
+#file-name-display {
     display: flex;
     margin-top: 0.5rem;
     justify-content: right;

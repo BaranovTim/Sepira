@@ -25,14 +25,16 @@
                     <label for="invoice_image" class="custom-file-upload">
                         Choose the file
                     </label>
-                        <input type="file" id="invoice_image" name="invoice_image" accept="image/*">
-                    {% if last_scan and last_scan.invoice_photo%}
-                        <span class="invoice_photo_name">{{ last_scan.invoice_photo }}</span>
+                    <input type="file" id="invoice_image" name="invoice_image" accept="image/*">
+
+                    {% if last_scan and last_scan.invoice_photo %}
+                        <span id="file-name-display">{{ last_scan.invoice_photo.name }}</span>
+                    {% else %}
+                        <span id="file-name-display"></span>
                     {% endif %}
-
-
                 </div>
             </div>
+
 
             <br><button type="submit">Confirm</button>
     </form>
@@ -46,6 +48,31 @@
             document.getElementById("invoice_image").addEventListener("change", function () {
             let fileName = this.files.length > 0 ? this.files[0].name : "Файл не выбран";
             document.getElementById("file-name").textContent = fileName;
-        });
+            });
+
+            document.getElementById('invoice_image').addEventListener('change', function(event) {
+                let fileNameDisplay = document.getElementById('file-name-display');
+                let file = event.target.files[0];  // Получаем выбранный файл
+                if (file) {
+                    fileNameDisplay.textContent = file.name;  // Показываем имя файла
+                } else {
+                    fileNameDisplay.textContent = "No file chosen";
+                }
+            });
+
+            document.getElementById('invoice_image').addEventListener('change', function(event) {
+                let fileNameDisplay = document.getElementById('file-name-display');
+                let file = event.target.files[0]; // Получаем выбранный файл
+
+                if (file) {
+                    let fileName = file.name;
+                    if (fileName.length > 15) {
+                        fileName = fileName.slice(0, 4) + "..." + fileName.slice(-6); // Форматирование имени
+                    }
+                    fileNameDisplay.textContent = fileName; // Показываем имя файла
+                } else {
+                    fileNameDisplay.textContent = "No file chosen";
+                }
+            });
     </script>
 {% endblock %}
