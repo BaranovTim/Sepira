@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['sepiraexample.shop', 'www.sepiraexample.shop', '127.0.0.1', 'sepira-3.onrender.com']
 
-PORT = os.environ.get('PORT', '8001')  # Default to 8000 if PORT is not set
+PORT = os.environ.get('PORT', '8002')  # Default to 8000 if PORT is not set
 
 
 # Application definition
@@ -91,11 +91,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sepira_example_al30',
+        'NAME': 'sepira200',
     }
 }
 
-DATABASES['default'] = ddu.parse('postgresql://sepira_example_al30_user:9K45IJcWq2feV3jM12W3c1aFN08qJzTp@dpg-cuaqpa23esus73eoeci0-a.frankfurt-postgres.render.com/sepira_example_al30')
+DATABASES['default'] = ddu.parse('postgresql://sepira200_user:SOuqrUOaIGw60a1wZpFPFgnHYt06x9zw@dpg-cv9p1p5ds78s73bremn0-a.frankfurt-postgres.render.com/sepira200')
 '''
 
 
