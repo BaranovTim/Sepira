@@ -83,19 +83,17 @@ WSGI_APPLICATION = 'warehouse.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
-
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sepira200',
+        'NAME': 'sepira_10',
     }
 }
 
-DATABASES['default'] = ddu.parse('postgresql://sepira200_user:SOuqrUOaIGw60a1wZpFPFgnHYt06x9zw@dpg-cv9p1p5ds78s73bremn0-a.frankfurt-postgres.render.com/sepira200')
+DATABASES['default'] = ddu.parse('postgresql://sepira_10_user:n9LIVa7JDg82BZZ4cGjWRsIdEzrliZTV@dpg-cvuvc5adbo4c73f9oldg-a.frankfurt-postgres.render.com/sepira_10')
 '''
 
 

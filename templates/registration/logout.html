@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log Out</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log Out</button>
+    </form>
 
 </body>
 </html>
